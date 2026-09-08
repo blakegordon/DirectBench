@@ -1,0 +1,17 @@
+Managed DirectX 1.1 and D3DX9 files in this folder are Copyright (c)
+Microsoft Corporation. All rights reserved.
+
+They are the DirectX SDK / DirectX End-User Runtime bits that DirectBench
+links against:
+
+  Microsoft.DirectX.dll                 1.0.2902.0
+  Microsoft.DirectX.Direct3D.dll        1.0.2902.0
+  Microsoft.DirectX.Direct3DX.dll       1.0.2911.0
+  d3dx9_30.dll                          native D3DX9 (32-bit), April 2006
+
+The matching .xml files are Microsoft's IntelliSense documentation.
+
+These components are deprecated. Microsoft's supported redistributable path
+was the DirectX End-User Runtime (DXSETUP). They are included here so the
+project can be built and run without installing the DirectX SDK. Review
+Microsoft's DirectX SDK license before redistributing a packaged build.

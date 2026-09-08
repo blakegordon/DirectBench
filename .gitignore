@@ -1,0 +1,12 @@
+[Bb]in/
+[Oo]bj/
+[Pp]ackages/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+build-warnings.log
+*.last.png
+*.last.txt
+*.adapters.txt
