@@ -2,7 +2,13 @@
 
 A Managed Direct3D 9 GPU benchmark for Windows. It draws a hardware-instanced field of tessellated spheres with a Shader Model 3.0 Blinn-Phong effect, 4x MSAA, and no vsync, then reports live and average FPS.
 
+![DirectBench last frame](screenshot.png)
+
 x86 only: the DirectX 9 managed assemblies and native D3DX are 32-bit.
+
+## Why Did I Use This Ancient Graphics Framework?
+
+I like it here! 😊 Life was better when Microsoft had a managed graphics API (pre-Unity, which is "scripted" and not as fun).
 
 ## Requirements
 
