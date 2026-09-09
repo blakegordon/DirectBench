@@ -1,0 +1,28 @@
+name: Build DirectBench
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restore and Build x86 Release
+      # Added /restore so Microsoft.CodeAnalysis.NetAnalyzers is downloaded
+      run: msbuild DirectBench.sln /p:Configuration=Release /p:Platform=x86 /restore
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: DirectBench-x86
+        path: bin/x86/Release/
