@@ -171,10 +171,6 @@ namespace DirectBench
             {
                 _scene.Render(_frames, false);
                 _frames.Tick();
-                Text = string.Format(
-                    "DirectBench - {0:0.0} FPS  ({1})",
-                    _frames.InstantFps,
-                    _adapter.Description);
 
                 if (_frames.IsFinished)
                 {
@@ -209,10 +205,6 @@ namespace DirectBench
             ResultAverageFps = _frames.AverageFps;
             ResultFrameCount = _frames.MeasuredFrames;
             ResultMeasuredSeconds = _frames.MeasuredSeconds;
-            Text = string.Format(
-                "DirectBench - AVERAGE {0:0.1} FPS  ({1})",
-                ResultAverageFps,
-                _adapter.Description);
 
             try
             {
