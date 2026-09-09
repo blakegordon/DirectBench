@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms;
 using Microsoft.DirectX;
 
@@ -86,7 +87,8 @@ namespace DirectBench
                 if (window.Completed)
                 {
                     string summary = string.Format(
-                        "DirectBench result{0}Adapter: {1}{0}Resolution: {2}x{3}{0}Average FPS: {4:0.1}{0}Frames: {5}{0}Measured seconds: {6}",
+                        CultureInfo.InvariantCulture,
+                        "DirectBench result{0}Adapter: {1}{0}Resolution: {2}x{3}{0}Average FPS: {4:0.0}{0}Frames: {5}{0}Measured seconds: {6:0.000}",
                         Environment.NewLine,
                         adapter.Description,
                         options.Width,
