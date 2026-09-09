@@ -1,0 +1,35 @@
+name: Build and Release DirectBench
+
+on:
+  push:
+    # Trigger the workflow only when pushing a tag that starts with 'v' (e.g., v1.0.0)
+    tags:
+      - 'v*'
+
+# Grant the GITHUB_TOKEN the required permissions to create a release
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restore and Build x86 Release
+      run: msbuild DirectBench.sln /p:Configuration=Release /p:Platform=x86 /restore
+
+    - name: Package Release
+      # Zips the contents of the Release folder so it's a single, clean download for users
+      run: Compress-Archive -Path bin\x86\Release\* -DestinationPath DirectBench.zip
+
+    - name: Publish GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: DirectBench.zip
+        generate_release_notes: true # Automatically summarizes PRs and commits
