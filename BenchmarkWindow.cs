@@ -161,9 +161,14 @@ namespace DirectBench
                 return;
             }
 
-            if (!_created.Device.CheckCooperativeLevel())
+            if (!_created.Device.CheckCooperativeLevel(out int hResult))
             {
-                Close();
+                TryStopAndScore();
+
+                //most likely device lost--at least leave a clue in the title bar:
+                string statusName = Enum.GetName(typeof(ResultCode), hResult) ?? string.Format("0x{0:X8}", hResult);
+                Text += string.Format(" [{0}]", statusName);
+
                 return;
             }
 
