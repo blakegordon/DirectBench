@@ -1,5 +1,5 @@
-using System;
 using Microsoft.DirectX;
+using System;
 
 namespace DirectBench
 {
@@ -16,6 +16,7 @@ namespace DirectBench
             MeshVertex[] vertices = new MeshVertex[vertexColumns * vertexRows];
 
             int v = 0;
+
             for (int stack = 0; stack <= stacks; stack++)
             {
                 float vCoord = (float)stack / stacks;
@@ -32,6 +33,7 @@ namespace DirectBench
 
                     // Left-handed: x = cos(theta)*sin(phi), y = cos(phi), z = sin(theta)*sin(phi)
                     Vector3 normal = new Vector3(cosTheta * sinPhi, cosPhi, sinTheta * sinPhi);
+
                     vertices[v++] = new MeshVertex
                     {
                         Position = normal,
@@ -43,6 +45,7 @@ namespace DirectBench
 
             int[] indices = new int[slices * stacks * 6];
             int k = 0;
+
             for (int stack = 0; stack < stacks; stack++)
             {
                 for (int slice = 0; slice < slices; slice++)
@@ -70,14 +73,17 @@ namespace DirectBench
             MeshVertex[] vertices = new MeshVertex[stride * stride];
 
             int v = 0;
+
             for (int z = 0; z <= divisions; z++)
             {
                 float zNorm = (float)z / divisions;
                 float zPos = -halfExtent + zNorm * halfExtent * 2.0f;
+
                 for (int x = 0; x <= divisions; x++)
                 {
                     float xNorm = (float)x / divisions;
                     float xPos = -halfExtent + xNorm * halfExtent * 2.0f;
+
                     vertices[v++] = new MeshVertex
                     {
                         Position = new Vector3(xPos, 0.0f, zPos),
@@ -89,6 +95,7 @@ namespace DirectBench
 
             int[] indices = new int[divisions * divisions * 6];
             int k = 0;
+
             for (int z = 0; z < divisions; z++)
             {
                 for (int x = 0; x < divisions; x++)
@@ -129,6 +136,7 @@ namespace DirectBench
                         float hue = (float)rng.NextDouble();
                         Vector3 rgb = HsvToRgb(hue, 0.45f, 0.95f);
                         float spin = 0.2f + (float)rng.NextDouble() * 1.4f;
+
                         if (rng.Next(0, 2) == 0)
                         {
                             spin = -spin;
@@ -172,6 +180,7 @@ namespace DirectBench
             float p = v * (1.0f - s);
             float q = v * (1.0f - f * s);
             float t = v * (1.0f - (1.0f - f) * s);
+
             switch ((int)i % 6)
             {
                 case 0: return new Vector3(v, t, p);

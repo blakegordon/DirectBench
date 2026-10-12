@@ -1,6 +1,6 @@
-using System;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
+using System;
 
 namespace DirectBench
 {
@@ -14,12 +14,15 @@ namespace DirectBench
         {
             Texture texture = new Texture(device, size, size, 0, Usage.None, Format.A8R8G8B8, Pool.Managed);
             GraphicsStream stream = texture.LockRectangle(0, LockFlags.None, out int pitch);
+            
             try
             {
                 byte[] row = new byte[size * 4];
+
                 for (int y = 0; y < size; y++)
                 {
                     int write = 0;
+
                     for (int x = 0; x < size; x++)
                     {
                         int tile = 32;

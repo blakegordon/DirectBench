@@ -1,5 +1,5 @@
-using System;
 using Microsoft.DirectX.Direct3D;
+using System;
 
 namespace DirectBench
 {

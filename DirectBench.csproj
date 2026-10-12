@@ -68,10 +68,10 @@
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="Dto\AdapterInfo.cs" />
     <Compile Include="Dto\BenchmarkOptions.cs" />
-    <Compile Include="Dto\BuiltMesh.cs" />
-    <Compile Include="Dto\CreatedDevice.cs" />
-    <Compile Include="Dto\InstanceVertex.cs" />
-    <Compile Include="Dto\MeshVertex.cs" />
+    <Compile Include="Rendering\Primitives\BuiltMesh.cs" />
+    <Compile Include="Rendering\Primitives\CreatedDevice.cs" />
+    <Compile Include="Rendering\Primitives\InstanceVertex.cs" />
+    <Compile Include="Rendering\Primitives\MeshVertex.cs" />
     <Compile Include="FrameCounter.cs" />
     <Compile Include="GraphicsAdapterCatalog.cs" />
     <Compile Include="GraphicsDeviceFactory.cs" />

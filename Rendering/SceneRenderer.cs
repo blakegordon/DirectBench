@@ -4,7 +4,9 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
- 
+using System.IO;
+using System.Text;
+
 namespace DirectBench
 {
     /// <summary>
@@ -50,6 +52,7 @@ namespace DirectBench
         }
 
         public int TriangleCount { get; private set; }
+
         public int DrawCallsPerFrame
         {
             get { return _options.GpuPasses + 1; }
@@ -81,7 +84,9 @@ namespace DirectBench
             _ground = new GpuMesh(_device, ground.Vertices, ground.Indices);
 
             _sphereInstances = new InstanceBuffer(_device, GeometryBuilder.CreateSphereInstances(options));
-            _groundInstance = new InstanceBuffer(_device, new InstanceVertex[] { GeometryBuilder.CreateGroundInstance() });
+
+            InstanceVertex[] vertices = new InstanceVertex[] { GeometryBuilder.CreateGroundInstance() };
+            _groundInstance = new InstanceBuffer(_device, vertices);
 
             _albedo = ProceduralTextureFactory.CreateAlbedo(_device, 256);
             _shader = new SceneShader(_device);
@@ -106,6 +111,7 @@ namespace DirectBench
             try
             {
                 Rectangle measured = _hudFont.MeasureString(null, "Ay0.8 FPS", DrawTextFormat.SingleLine, Color.White);
+                
                 if (measured.Height > _hudPixels)
                 {
                     _hudLineHeight = measured.Height + OverlayPx(8);
@@ -173,6 +179,7 @@ namespace DirectBench
             _shader.SetLights(_lightPositions, _lightColors);
 
             int effectPasses = _shader.Begin();
+
             for (int pass = 0; pass < effectPasses; pass++)
             {
                 _shader.BeginPass(pass);
@@ -252,7 +259,8 @@ namespace DirectBench
         {
             try
             {
-                string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DirectBench.last.png");
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DirectBench.last.png");
+                
                 if (LastFrameImage != null)
                 {
                     LastFrameImage.Save(path, ImageFormat.Png);
@@ -267,7 +275,7 @@ namespace DirectBench
             catch (DirectXException)
             {
             }
-            catch (System.IO.IOException)
+            catch (IOException)
             {
             }
         }
@@ -278,6 +286,7 @@ namespace DirectBench
             float orbit = time * 0.22f;
             float radius = _sceneRadius * 1.15f;
             float height = _sceneRadius * 0.28f + 4.0f;
+
             eye = new Vector3(
                 target.X + (float)Math.Cos(orbit) * radius,
                 target.Y + height,
@@ -303,6 +312,7 @@ namespace DirectBench
             // Consolas is monospace: pad cells so '|' and the first letter of
             // each field share a column across every HUD line.
             string[][] cells;
+
             string[][] stats = new string[][]
             {
                 new string[] { _adapter.Description, string.Format("{0}x{1}", _options.Width, _options.Height) },
@@ -313,6 +323,7 @@ namespace DirectBench
                     string.Format("{0} draws/frame", DrawCallsPerFrame)
                 }
             };
+
             if (finished)
             {
                 cells = stats;
@@ -335,6 +346,7 @@ namespace DirectBench
 
             int[] widths = HudColumnWidths(cells);
             string[] lines = new string[cells.Length];
+
             for (int i = 0; i < cells.Length; i++)
             {
                 lines[i] = FormatHudRow(cells[i], widths);
@@ -346,6 +358,7 @@ namespace DirectBench
             Color hudColor = Color.FromArgb(255, 240, 240, 240);
 
             _hudSprite.Begin(SpriteFlags.AlphaBlend);
+
             for (int i = 0; i < lines.Length; i++)
             {
                 Rectangle row = new Rectangle(hudMargin, hudMargin + i * lineStep, rowWidth, lineStep);
@@ -358,17 +371,20 @@ namespace DirectBench
                 int captionHeight = _hudPixels + OverlayPx(4);
                 int scoreHeight = _scorePixels + OverlayPx(6);
                 int captionY = _options.Height - margin - captionHeight;
+
                 Rectangle scoreArea = new Rectangle(
                     margin,
                     captionY - scoreHeight,
                     _options.Width - margin * 2,
                     scoreHeight);
+
                 _scoreFont.DrawText(
                     _hudSprite,
                     string.Format(CultureInfo.InvariantCulture, "{0:0.0} FPS", frames.AverageFps),
                     scoreArea,
                     DrawTextFormat.Left | DrawTextFormat.Bottom,
                     Color.FromArgb(255, 255, 230, 120));
+
                 _hudFont.DrawText(
                     _hudSprite,
                     "average     Esc to close",
@@ -383,6 +399,7 @@ namespace DirectBench
         private static int[] HudColumnWidths(string[][] rows)
         {
             int columns = 0;
+
             for (int r = 0; r < rows.Length; r++)
             {
                 if (rows[r].Length > columns)
@@ -392,6 +409,7 @@ namespace DirectBench
             }
 
             int[] widths = new int[columns];
+
             for (int r = 0; r < rows.Length; r++)
             {
                 for (int c = 0; c < rows[r].Length; c++)
@@ -410,12 +428,14 @@ namespace DirectBench
         private static string FormatHudRow(string[] cells, int[] widths)
         {
             int last = cells.Length - 1;
+
             while (last > 0 && string.IsNullOrEmpty(cells[last]))
             {
                 last--;
             }
 
-            System.Text.StringBuilder row = new System.Text.StringBuilder();
+            StringBuilder row = new StringBuilder();
+
             for (int i = 0; i <= last; i++)
             {
                 if (i > 0)
@@ -425,6 +445,7 @@ namespace DirectBench
 
                 string cell = cells[i] ?? string.Empty;
                 row.Append(cell);
+
                 if (i < cells.Length - 1)
                 {
                     int pad = widths[i] - cell.Length;

@@ -1,6 +1,6 @@
-using System;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
+using System;
 
 namespace DirectBench
 {
@@ -132,6 +132,7 @@ technique LitInstanced
         public SceneShader(Device device)
         {
             string errors = null;
+
             try
             {
                 _effect = Effect.FromString(device, Hlsl, null, null, ShaderFlags.None, null, out errors);
