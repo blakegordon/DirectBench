@@ -1,7 +1,7 @@
-using System;
-using System.Windows.Forms;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
+using System;
+using System.Windows.Forms;
 
 namespace DirectBench
 {
@@ -49,6 +49,7 @@ namespace DirectBench
                 MultiSample = msaa,
                 MultiSampleQuality = 0
             };
+
             if (options.Fullscreen)
             {
                 pp.FullScreenRefreshRateInHz = 0;
@@ -56,6 +57,7 @@ namespace DirectBench
 
             CreateFlags flags = CreateFlags.HardwareVertexProcessing;
             Device device;
+
             try
             {
                 device = new Device(adapter.Index, DeviceType.Hardware, window, flags, pp);
@@ -66,6 +68,7 @@ namespace DirectBench
                 {
                     pp.MultiSample = MultiSampleType.None;
                     msaa = MultiSampleType.None;
+
                     try
                     {
                         device = new Device(adapter.Index, DeviceType.Hardware, window, flags, pp);
@@ -96,6 +99,7 @@ namespace DirectBench
         private static Format ChooseBackBufferFormat(AdapterInfo adapter, bool fullscreen)
         {
             Format[] candidates;
+
             if (!fullscreen)
             {
                 try
@@ -127,6 +131,7 @@ namespace DirectBench
         private static DepthFormat ChooseDepthFormat(AdapterInfo adapter, Format backBuffer)
         {
             Format adapterFormat = backBuffer;
+
             DepthFormat[] candidates = new DepthFormat[]
             {
                 DepthFormat.D24S8,
@@ -158,6 +163,7 @@ namespace DirectBench
             for (int i = 0; i < ladder.Length; i++)
             {
                 MultiSampleType candidate = ladder[i];
+
                 if (SampleCount(candidate) > requestedSamples)
                 {
                     continue;

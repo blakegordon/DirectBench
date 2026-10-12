@@ -59,6 +59,7 @@ namespace DirectBench
                 RowCount = 7,
                 Padding = new Padding(0)
             };
+
             root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             root.RowStyles.Add(new RowStyle(SizeType.Percent, 45F));
@@ -75,6 +76,7 @@ namespace DirectBench
                 AutoSize = true,
                 Margin = new Padding(0, 0, 0, 4)
             };
+
             root.Controls.Add(listLabel, 0, 0);
 
             _adapterList = new ListBox
@@ -84,9 +86,11 @@ namespace DirectBench
                 HorizontalScrollbar = true,
                 Margin = new Padding(0, 0, 0, 8)
             };
+
             for (int i = 0; i < adapters.Count; i++)
             {
                 _adapterList.Items.Add(adapters[i].DisplayName);
+
                 if (adapters[i].Index == options.AdapterIndex)
                 {
                     _adapterList.SelectedIndex = i;
@@ -109,6 +113,7 @@ namespace DirectBench
                 Margin = new Padding(0, 0, 0, 8),
                 ForeColor = Color.FromArgb(40, 40, 40)
             };
+
             root.Controls.Add(_details, 0, 2);
 
             TableLayoutPanel optionsRow = new TableLayoutPanel
@@ -119,6 +124,7 @@ namespace DirectBench
                 RowCount = 1,
                 Margin = new Padding(0, 0, 0, 8)
             };
+
             for (int i = 0; i < 6; i++)
             {
                 optionsRow.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F / 6F));
@@ -146,6 +152,7 @@ namespace DirectBench
                 Checked = options.Fullscreen,
                 Margin = new Padding(0, 0, 0, 8)
             };
+
             root.Controls.Add(_fullscreen, 0, 4);
 
             Label note = new Label
@@ -159,6 +166,7 @@ namespace DirectBench
                        "Escape exits. A GPU that does not appear above cannot be targeted: Direct3D 9 only " +
                        "enumerates adapters the runtime can present to."
             };
+
             root.Controls.Add(note, 0, 5);
 
             FlowLayoutPanel buttons = new FlowLayoutPanel
@@ -169,6 +177,7 @@ namespace DirectBench
                 WrapContents = false,
                 Margin = new Padding(0)
             };
+
             Button cancel = new Button
             {
                 Text = "Cancel",
@@ -178,6 +187,7 @@ namespace DirectBench
                 Margin = new Padding(8, 0, 0, 0),
                 Padding = new Padding(12, 4, 12, 4)
             };
+
             Button start = new Button
             {
                 Text = "Start benchmark",
@@ -186,6 +196,7 @@ namespace DirectBench
                 Margin = new Padding(8, 0, 0, 0),
                 Padding = new Padding(12, 4, 12, 4)
             };
+
             start.Click += OnStart;
             AcceptButton = start;
             CancelButton = cancel;
@@ -203,6 +214,7 @@ namespace DirectBench
             Size desired = new Size(
                 (int)Math.Round(DesignWidth * scale),
                 (int)Math.Round(DesignHeight * scale));
+            
             if (ClientSize != desired)
             {
                 ClientSize = desired;
@@ -230,6 +242,7 @@ namespace DirectBench
                 Dock = DockStyle.Fill,
                 IntegralHeight = false
             };
+
             box.Items.AddRange(items);
             box.SelectedIndex = selectedIndex;
             return box;
@@ -256,15 +269,18 @@ namespace DirectBench
                 RowCount = 2,
                 Margin = new Padding(0, 0, 8, 0)
             };
+
             panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             panel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             panel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
             Label label = new Label
             {
                 Text = title,
                 AutoSize = true,
                 Margin = new Padding(0, 0, 0, 2)
             };
+
             inner.Margin = new Padding(0);
             panel.Controls.Add(label, 0, 0);
             panel.Controls.Add(inner, 0, 1);
@@ -274,6 +290,7 @@ namespace DirectBench
         private void UpdateListScrollWidth()
         {
             int widest = _adapterList.ClientSize.Width;
+
             for (int i = 0; i < _adapterList.Items.Count; i++)
             {
                 string text = _adapterList.Items[i].ToString();
@@ -298,6 +315,7 @@ namespace DirectBench
             AdapterInfo a = _adapters[_adapterList.SelectedIndex];
             string vs = a.VertexShaderVersion == null ? "?" : a.VertexShaderVersion.Major + "." + a.VertexShaderVersion.Minor;
             string ps = a.PixelShaderVersion == null ? "?" : a.PixelShaderVersion.Major + "." + a.PixelShaderVersion.Minor;
+            
             _details.Text = string.Format(
                 "{0}\r\nDriver {1}  {2}    VS {3}  PS {4}    {5}",
                 a.Description,

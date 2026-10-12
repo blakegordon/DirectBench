@@ -49,6 +49,7 @@ namespace DirectBench
             try
             {
                 uint dpi = GetDpiForSystem();
+
                 if (dpi == 0)
                 {
                     return 1.0f;
@@ -75,6 +76,7 @@ namespace DirectBench
                 {
                     AutoFlush = true
                 };
+
                 Console.SetOut(writer);
                 Console.SetError(writer);
             }

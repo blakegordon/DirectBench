@@ -1,5 +1,5 @@
-using System.Runtime.InteropServices;
 using Microsoft.DirectX;
+using System.Runtime.InteropServices;
 
 namespace DirectBench
 {

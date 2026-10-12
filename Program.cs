@@ -1,8 +1,9 @@
+using Microsoft.DirectX;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Windows.Forms;
-using Microsoft.DirectX;
 
 namespace DirectBench
 {
@@ -15,6 +16,7 @@ namespace DirectBench
             Application.SetCompatibleTextRenderingDefault(false);
 
             BenchmarkOptions options;
+
             try
             {
                 options = CommandLineParser.Parse(args);
@@ -32,6 +34,7 @@ namespace DirectBench
             }
 
             IList<AdapterInfo> adapters;
+
             try
             {
                 adapters = GraphicsAdapterCatalog.Enumerate();
@@ -39,13 +42,13 @@ namespace DirectBench
             catch (DirectXException ex)
             {
                 ShowMessage("Failed to enumerate Direct3D 9 adapters:\r\n" + ex.Message, true);
-                return 1;
+                return 2;
             }
 
             if (options.ListAdaptersOnly)
             {
                 string list = GraphicsAdapterCatalog.FormatList(adapters);
-                NativeMethods.TryWriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DirectBench.adapters.txt"), list);
+                NativeMethods.TryWriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DirectBench.adapters.txt"), list);
                 ShowMessage(list, true);
                 return 0;
             }
@@ -66,6 +69,7 @@ namespace DirectBench
             }
 
             AdapterInfo adapter;
+
             try
             {
                 adapter = GraphicsAdapterCatalog.Resolve(options, adapters);
@@ -73,17 +77,18 @@ namespace DirectBench
             catch (ArgumentException ex)
             {
                 ShowMessage(ex.Message + Environment.NewLine + Environment.NewLine + GraphicsAdapterCatalog.FormatList(adapters), true);
-                return 1;
+                return 3;
             }
             catch (InvalidOperationException ex)
             {
                 ShowMessage(ex.Message + Environment.NewLine + Environment.NewLine + GraphicsAdapterCatalog.FormatList(adapters), true);
-                return 1;
+                return 4;
             }
 
             using (BenchmarkWindow window = new BenchmarkWindow(options, adapter))
             {
                 Application.Run(window);
+
                 if (window.Completed)
                 {
                     string summary = string.Format(
@@ -96,8 +101,9 @@ namespace DirectBench
                         window.ResultAverageFps,
                         window.ResultFrameCount,
                         window.ResultMeasuredSeconds);
+                    
                     TryWriteConsole(summary);
-                    NativeMethods.TryWriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DirectBench.last.txt"), summary);
+                    NativeMethods.TryWriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DirectBench.last.txt"), summary);
                     return 0;
                 }
             }
@@ -123,7 +129,7 @@ namespace DirectBench
             {
                 Console.WriteLine(text);
             }
-            catch (System.IO.IOException)
+            catch (IOException)
             {
             }
             catch (ObjectDisposedException)

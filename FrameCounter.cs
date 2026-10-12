@@ -71,6 +71,7 @@ namespace DirectBench
                 }
 
                 double t = (ElapsedSeconds - _measureStartSeconds) / _measureSeconds;
+
                 if (t < 0.0)
                 {
                     return 0.0;
@@ -111,6 +112,7 @@ namespace DirectBench
             _windowFrames++;
 
             double windowLength = elapsed - _windowStartSeconds;
+
             if (windowLength >= 0.25)
             {
                 _instantFps = _windowFrames / windowLength;
@@ -130,6 +132,7 @@ namespace DirectBench
 
             _measuredFrames++;
             MeasuredSeconds = elapsed - _measureStartSeconds;
+
             if (MeasuredSeconds > 0.0)
             {
                 AverageFps = _measuredFrames / MeasuredSeconds;
@@ -149,9 +152,11 @@ namespace DirectBench
             }
 
             double elapsed = _stopwatch.Elapsed.TotalSeconds;
+
             if (_measureStartSeconds >= 0.0 && _measuredFrames > 0)
             {
                 MeasuredSeconds = elapsed - _measureStartSeconds;
+
                 if (MeasuredSeconds > 0.0)
                 {
                     AverageFps = _measuredFrames / MeasuredSeconds;

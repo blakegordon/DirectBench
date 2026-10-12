@@ -1,8 +1,8 @@
+using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
 
 namespace DirectBench
 {
@@ -18,6 +18,7 @@ namespace DirectBench
             {
                 AdapterInformation adapter = adapters[i];
                 AdapterDetails details = adapter.Information;
+
                 AdapterInfo info = new AdapterInfo
                 {
                     Index = adapter.Adapter,

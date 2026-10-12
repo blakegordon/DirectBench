@@ -8,6 +8,7 @@ namespace DirectBench
         public static BenchmarkOptions Parse(string[] args)
         {
             BenchmarkOptions options = BenchmarkOptions.CreateDefault();
+
             if (args == null || args.Length == 0)
             {
                 return options;
@@ -16,6 +17,7 @@ namespace DirectBench
             for (int i = 0; i < args.Length; i++)
             {
                 string arg = args[i];
+
                 if (IsFlag(arg, "--help", "-h", "/?"))
                 {
                     options.ShowHelp = true;
@@ -32,6 +34,7 @@ namespace DirectBench
                 {
                     string value = RequireValue(args, ref i, arg);
                     options.AdapterSpecified = true;
+                    
                     if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out int index))
                     {
                         options.AdapterIndex = index;
@@ -135,6 +138,7 @@ namespace DirectBench
         private static int ParseInt(string[] args, ref int index, string flag, int min, int max)
         {
             string text = RequireValue(args, ref index, flag);
+
             if (!int.TryParse(text, NumberStyles.Integer, CultureInfo.InvariantCulture, out int value))
             {
                 throw new ArgumentException("Invalid integer for " + flag + ": " + text);

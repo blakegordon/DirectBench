@@ -1,8 +1,10 @@
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
+using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
+using System.Windows.Forms;
 
 namespace DirectBench
 {
@@ -58,6 +60,7 @@ namespace DirectBench
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
+
             try
             {
                 _created = GraphicsDeviceFactory.Create(this, _adapter, _options);
@@ -80,8 +83,9 @@ namespace DirectBench
         private void FailDeviceCreate(Exception ex)
         {
             NativeMethods.TryWriteAllText(
-                System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DirectBench.last.txt"),
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DirectBench.last.txt"),
                 "Device creation failed:" + Environment.NewLine + ex);
+            
             MessageBox.Show(this, ex.Message, "DirectBench - device creation failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             BeginInvoke(new MethodInvoker(Close));
         }
@@ -100,7 +104,7 @@ namespace DirectBench
         {
             if (_resultImage != null)
             {
-                e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+                e.Graphics.InterpolationMode = InterpolationMode.HighQualityBilinear;
                 e.Graphics.DrawImage(_resultImage, ClientRectangle);
                 return;
             }
@@ -186,7 +190,7 @@ namespace DirectBench
             {
                 _deviceReady = false;
                 NativeMethods.TryWriteAllText(
-                    System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DirectBench.last.txt"),
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DirectBench.last.txt"),
                     "Rendering failed:" + Environment.NewLine + ex);
                 MessageBox.Show(this, ex.Message, "DirectBench - rendering failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
