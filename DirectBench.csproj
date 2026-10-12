@@ -97,10 +97,10 @@
     <None Include="App.config" />
     <None Include="app.manifest" />
     <None Include="DirectBench.ico" />
-    <None Include="lib\MDX\NOTICE.txt" />
-    <None Include="lib\MDX\Microsoft.DirectX.xml" />
-    <None Include="lib\MDX\Microsoft.DirectX.Direct3D.xml" />
-    <None Include="lib\MDX\Microsoft.DirectX.Direct3DX.xml" />
+    <None Include="scripts\Get-ManagedDirectX.ps1" />
+    <None Include="THIRD-PARTY-NOTICES.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="lib\MDX\d3dx9_30.dll">
       <Link>d3dx9_30.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -113,4 +113,17 @@
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- Microsoft's MDX/D3DX files are not in the repo. On a real build (not a VS
+       design-time build), download them from Microsoft into lib\MDX if any are missing.
+       BuildingProject is set to true by BuildOnlySettings, which runs before
+       ResolveAssemblyReferences during Build/Rebuild but not during design-time builds. -->
+  <ItemGroup>
+    <ManagedDirectXFile Include="lib\MDX\Microsoft.DirectX.dll;lib\MDX\Microsoft.DirectX.Direct3D.dll;lib\MDX\Microsoft.DirectX.Direct3DX.dll;lib\MDX\d3dx9_30.dll" />
+  </ItemGroup>
+  <Target Name="FetchManagedDirectX" BeforeTargets="ResolveAssemblyReferences" Condition="'$(BuildingProject)' == 'true'">
+    <ItemGroup>
+      <_MissingManagedDirectXFile Include="@(ManagedDirectXFile)" Condition="!Exists('%(FullPath)')" />
+    </ItemGroup>
+    <Exec Condition="'@(_MissingManagedDirectXFile)' != ''" Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\scripts\Get-ManagedDirectX.ps1&quot;" />
+  </Target>
 </Project>

@@ -17,7 +17,7 @@ I like it here! 😊 Life was better when Microsoft had a managed graphics API (
 - A GPU with Shader Model 3.0 and hardware vertex processing
 - To **build**: Visual Studio with the .NET Framework 4.8.1 targeting pack
 
-You do **not** need the DirectX SDK or the DirectX End-User Runtime. Managed DirectX 1.1, Microsoft's IntelliSense XML, and the 32-bit `d3dx9_30.dll` that Direct3DX imports live in `lib/MDX` and are copied next to the exe on build.
+You do **not** need the DirectX SDK or the DirectX End-User Runtime. The release zip carries the Managed DirectX 1.1 assemblies and the 32-bit `d3dx9_30.dll` next to the exe.
 
 ## Build
 
@@ -29,6 +29,8 @@ msbuild DirectBench.sln /p:Configuration=Release /p:Platform=x86
 
 The output is `bin\x86\Release\DirectBench.exe`.
 
+The Microsoft DirectX files are not stored in this repo. The first build runs [`scripts/Get-ManagedDirectX.ps1`](scripts/Get-ManagedDirectX.ps1), which downloads Microsoft's DirectX End-User Runtime (June 2010) from `download.microsoft.com` (~96 MB, SHA-256 verified) and extracts the files below into `lib/MDX`. Later builds reuse them. In Visual Studio, references show as unresolved until that first build.
+
 ## Run
 
 Launch `DirectBench.exe` with no arguments to pick an adapter. Enter finishes a run and shows the average FPS on the last frame; Escape (or Q) exits.
@@ -39,20 +41,20 @@ DirectBench.exe --list
 DirectBench.exe --adapter 0 --seconds 10
 ```
 
-## Dependencies in this tree
+## Dependencies fetched at build time
 
-| File | Why it is here |
+| File in `lib/MDX` | Why it is needed |
 | --- | --- |
-| `lib/MDX/Microsoft.DirectX.dll` | Core MDX types (`Vector3`, `Matrix`, …), version 1.0.2902.0 |
-| `lib/MDX/Microsoft.DirectX.Direct3D.dll` | Managed Direct3D 9, version 1.0.2902.0 |
-| `lib/MDX/Microsoft.DirectX.Direct3DX.dll` | D3DX (effects, font, sprite, texture loader), version 1.0.2911.0 |
-| `lib/MDX/*.xml` | Microsoft's IntelliSense docs for those assemblies |
-| `lib/MDX/d3dx9_30.dll` | Native D3DX9 (32-bit) imported by Direct3DX |
+| `Microsoft.DirectX.dll` | Core MDX types (`Vector3`, `Matrix`, …), version 1.0.2902.0 |
+| `Microsoft.DirectX.Direct3D.dll` | Managed Direct3D 9, version 1.0.2902.0 |
+| `Microsoft.DirectX.Direct3DX.dll` | D3DX (effects, font, sprite, texture loader), version 1.0.2911.0 |
+| `*.xml` | Microsoft's IntelliSense docs for those assemblies (not shipped) |
+| `d3dx9_30.dll` | Native D3DX9 (32-bit) imported by Direct3DX |
 
-`Microsoft.VisualC` (for MDX's `IsConstModifier`) comes from the .NET Framework targeting pack, not this folder. See `lib/MDX/NOTICE.txt` for Microsoft copyright.
+`Microsoft.VisualC` (for MDX's `IsConstModifier`) comes from the .NET Framework targeting pack.
 
 ## License
 
 DirectBench source is public domain ([The Unlicense](LICENSE)).
 
-`lib/MDX` is Copyright Microsoft Corporation and is not under that dedication. See `lib/MDX/NOTICE.txt`.
+The Microsoft DirectX components are Copyright Microsoft Corporation and are not covered by that dedication. See [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).

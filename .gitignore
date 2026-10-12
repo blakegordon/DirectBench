@@ -10,3 +10,6 @@ build-warnings.log
 *.last.png
 *.last.txt
 *.adapters.txt
+
+# Microsoft Managed DirectX / D3DX, downloaded at build time by scripts/Get-ManagedDirectX.ps1
+lib/MDX/
