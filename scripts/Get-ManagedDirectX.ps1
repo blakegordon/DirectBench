@@ -66,7 +66,13 @@ try {
     Write-Host "Downloading DirectX End-User Runtime (June 2010) from Microsoft (~96 MB)..."
     Invoke-WebRequest -Uri $RedistUrl -OutFile $redist -UseBasicParsing
 
-    $hash = (Get-FileHash -LiteralPath $redist -Algorithm SHA256).Hash
+    # Hash with .NET rather than Get-FileHash: in Windows PowerShell 5.1, Get-FileHash lives in the
+    # script half of Microsoft.PowerShell.Utility, which fails to load when powershell.exe inherits
+    # PowerShell 7's PSModulePath (as on GitHub Actions, where msbuild is launched from pwsh).
+    $sha = [Security.Cryptography.SHA256]::Create()
+    $stream = [IO.File]::OpenRead($redist)
+    try     { $hash = -join ($sha.ComputeHash($stream) | ForEach-Object { $_.ToString('X2') }) }
+    finally { $stream.Dispose(); $sha.Dispose() }
     if ($hash -ne $RedistSha256) {
         throw "SHA-256 mismatch for directx_Jun2010_redist.exe. Expected $RedistSha256, got $hash."
     }
