@@ -78,7 +78,7 @@
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rendering\Dx9StreamFrequency.cs" />
+    <Compile Include="Rendering\Primitives\Dx9StreamFrequency.cs" />
     <Compile Include="Rendering\GeometryBuilder.cs" />
     <Compile Include="Rendering\GpuMesh.cs" />
     <Compile Include="Rendering\InstanceBuffer.cs" />
