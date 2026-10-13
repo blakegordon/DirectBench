@@ -17,7 +17,7 @@ I like it here! 😊 Life was better when Microsoft had a managed graphics API (
 - A GPU with Shader Model 3.0 and hardware vertex processing
 - To **build**: Visual Studio with the .NET Framework 4.8.1 targeting pack
 
-You do **not** need the DirectX SDK or the DirectX End-User Runtime. The release zip carries the Managed DirectX 1.1 assemblies and the 32-bit `d3dx9_30.dll` next to the exe.
+You do **not** need the DirectX SDK or the DirectX End-User Runtime. 
 
 ## Build
 
