@@ -12,7 +12,7 @@ I like it here! 😊 Life was better when Microsoft had a managed graphics API (
 
 ## Requirements
 
-- Windows (Direct3D 9 is part of the OS; `d3d9.dll` is not shipped)
+- Windows 
 - .NET Framework 4.8.1
 - A GPU with Shader Model 3.0 and hardware vertex processing
 - To **build**: Visual Studio with the .NET Framework 4.8.1 targeting pack
