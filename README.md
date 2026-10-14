@@ -1,6 +1,6 @@
 # DirectBench
 
-A Managed Direct3D 9 GPU benchmark for Windows. It draws a hardware-instanced field of tessellated spheres with a Shader Model 3.0 Blinn-Phong effect, then reports live and average FPS.
+A Managed Direct3D 9 GPU benchmark for Windows. It draws a hardware-instanced field of tessellated spheres with a Shader Model 3.0 Blinn-Phong effect, then reports frames per second.
 
 ![DirectBench last frame](screenshot.png)
 
