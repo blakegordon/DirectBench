@@ -91,6 +91,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Rendering\SceneShader.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include=".editorconfig" />
   </ItemGroup>
   <ItemGroup>
