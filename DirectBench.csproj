@@ -104,10 +104,10 @@
     <None Include="THIRD-PARTY-NOTICES.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="lib\MDX\d3dx9_30.dll">
-      <Link>d3dx9_30.dll</Link>
+    <ContentWithTargetPath Include="lib\MDX\d3dx9_30.dll">
+      <TargetPath>d3dx9_30.dll</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </ContentWithTargetPath>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
