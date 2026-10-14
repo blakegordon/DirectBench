@@ -33,7 +33,7 @@ The Microsoft DirectX files are not stored in this repo. The first build runs [`
 
 ## Run
 
-Launch `DirectBench.exe` with no arguments to pick an adapter. ENTER finishes a run and shows the average FPS on the last frame; ESCAPE (or Q) exits.
+Launch `DirectBench.exe` with no arguments to pick an adapter. ENTER finishes a run; ESCAPE exits.
 
 ```
 DirectBench.exe --help
