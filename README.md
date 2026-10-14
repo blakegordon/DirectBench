@@ -4,9 +4,9 @@ A Managed Direct3D 9 GPU benchmark for Windows. It draws a hardware-instanced fi
 
 ![DirectBench last frame](screenshot.png)
 
-x86 only: the DirectX 9 managed assemblies and native D3DX are 32-bit.
+It runs on x86 only: the DirectX 9 managed assemblies and native D3DX are 32-bit.
 
-## Why Did I Use This Ancient Graphics Framework?
+## Why Did I Use Managed DirectX, an Ancient Graphics Framework?
 
 I like it here! 😊 Life was better when Microsoft had a managed graphics API (pre-Unity, which is "scripted" and not as fun).
 
