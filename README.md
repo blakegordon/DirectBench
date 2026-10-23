@@ -1,6 +1,6 @@
 # DirectBench
 
-Welcome to my Managed Direct3D 9 GPU benchmark for Windows. It draws a hardware-instanced field of tessellated spheres with a Shader Model 3.0 Blinn-Phong effect.
+Welcome to my [Managed Direct3D](https://learn.microsoft.com/en-us/previous-versions/windows/desktop/bb318659(v=vs.85)) GPU benchmark for Windows. It draws a hardware-instanced field of tessellated spheres with a Shader Model 3.0 Blinn-Phong effect.
 
 ![DirectBench last frame](screenshot.png)
 
