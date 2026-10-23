@@ -6,7 +6,7 @@ Welcome to my [Managed Direct3D](https://learn.microsoft.com/en-us/previous-vers
 
 This program compiles for x86 only but runs on x64 via Windows on Windows.
 
-## Why Did I Use Managed DirectX, an Ancient Graphics Framework?
+## Why Did I Use This Ancient Graphics Framework?
 
 I like it here! 😊 Life was better when Microsoft had a managed graphics API (pre-Unity, which is "scripted" and not as fun).
 
